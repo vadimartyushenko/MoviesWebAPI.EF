@@ -22,37 +22,16 @@ namespace MoviesWebAPI.Controllers
         [HttpGet]
         public JsonResult Get()
         {
-            /*string query = @"
-                            select m.Id, m.Title, g.Name from Movie m
-                            join Genre g on g.Id = m.GenreId
-                            ";*/
-            var query = @"
-SELECT m.Id, m.Title, g.Name,
-  STUFF
-  (
-    (SELECT ',' + a.Name
-     FROM MovieActors AS ma
-	 join Actor a on ma.ActorId = a.Id
-     WHERE ma.MovieId = m.Id
-	 order by a.Id desc
-     FOR XML PATH('')), 1, 1, NULL
-  ) AS Actors
-FROM Movie m
-join Genre g on g.Id = m.GenreId
-";
-            var dt = new DataTable();
-            var data = _dbContext.Movies.ToArray();
-            var sqlDataSource = _configuration.GetConnectionString("LocalMoviedb");
-            SqlDataReader reader;
-            using(var con = new SqlConnection(sqlDataSource)) {
-                con.Open();
-                using var command = new SqlCommand(query, con);
-                reader = command.ExecuteReader();
-                dt.Load(reader);
-                reader.Close();
-                con.Close();
-            }
-            return new JsonResult(dt);
+            var movies = _dbContext.Movies.ToArray();
+            if (movies.Length == 0)
+                return Json(null);
+
+            var actors = _dbContext.Actors.ToArray();
+            var genres = _dbContext.Genres.ToArray();
+            var movieActors = _dbContext.MovieActors.ToArray();
+
+            var moviesToView = movies.Select(x => new MovieView(x.Title, x.Genre.Name, string.Join(',', x.MovieActors.Select(act => act.Actor.Name))));
+            return Json(moviesToView);
         }
 
         [HttpPost]
