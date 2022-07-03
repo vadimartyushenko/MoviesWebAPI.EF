@@ -30,7 +30,7 @@ namespace MoviesWebAPI.Controllers
             var genres = _dbContext.Genres.ToArray();
             var movieActors = _dbContext.MovieActors.ToArray();
 
-            var moviesToView = movies.Select(x => new MovieView(x.Title, x.Genre.Name, string.Join(',', x.MovieActors.Select(act => act.Actor.Name))));
+            var moviesToView = movies.Select(x => new MovieView(x.Title, x.Genre.Name, string.Join("\r\n", x.MovieActors.Select(act => act.Actor.Name))));
             return Json(moviesToView);
         }
 
