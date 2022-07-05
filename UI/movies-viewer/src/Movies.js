@@ -11,15 +11,47 @@ export class Movies extends Component {
             movies: [],
             modalTitle: "",
             MovieName: "",
-            MovieId: 0
+            MovieId: 0,
+            MovieIdFilter: "",
+            MovieNameFilter: "",
+            moviesWithoutFilter: []
         }
+    }
+
+    FilterFn() {
+        var MovieIdFilter = this.state.MovieIdFilter;
+        var MovieNameFilter = this.state.MovieNameFilter;
+
+        var filteredData = this.state.moviesWithoutFilter.filter(
+            function (el) {
+                return el.MovieId.toString().toLowerCase().includes(
+                    MovieIdFilter.toString().trim().toLowerCase()
+                ) &&
+                    el.MovieName.toString().toLowerCase().includes(
+                        MovieNameFilter.toString().trim().toLowerCase()
+                    )
+            }
+        );
+
+        this.setState({movies:filteredData});
+    }
+
+    changeMovieIdFilter = (e) => {
+        this.state.MovieIdFilter = e.target.value;
+        //this.setState({MovieIdFilter: e.target.value});
+        this.FilterFn();
+    }
+
+    changeMovieNameFilter = (e) => {
+        this.state.MovieNameFilter = e.target.value;
+        this.FilterFn();
     }
 
     refreshList() {
         fetch(variables.API_URL + 'movie')
             .then(resp => resp.json())
             .then(data => {
-                this.setState({ movies: data });
+                this.setState({ movies: data, moviesWithoutFilter: data });
             });
     }
 
@@ -31,19 +63,19 @@ export class Movies extends Component {
         this.setState({ MovieName: e.target.value });
     }
 
-    addClick(){
+    addClick() {
         this.setState({
-            modalTitle:"Add Movie",
-            MovieId:0,
-            MovieName:""
+            modalTitle: "Add Movie",
+            MovieId: 0,
+            MovieName: ""
         });
     }
 
-    editClick(mov){
+    editClick(mov) {
         this.setState({
-            modalTitle:"Edit Movie",
-            MovieId:mov.MovieId,
-            MovieName:mov.MovieName
+            modalTitle: "Edit Movie",
+            MovieId: mov.MovieId,
+            MovieName: mov.MovieName
         });
     }
 
@@ -66,6 +98,15 @@ export class Movies extends Component {
                     <thead>
                         <tr>
                             <th>
+                                <input className='form-control m-2'
+                                    onChange={this.changeMovieIdFilter}
+                                    placeholder="Filter By Id" />
+                                Id
+                            </th>
+                            <th>
+                                <input className='form-control m-2'
+                                    onChange={this.changeMovieNameFilter}
+                                    placeholder="Filter By Title" />
                                 Title
                             </th>
                             <th>
@@ -81,7 +122,8 @@ export class Movies extends Component {
                     </thead>
                     <tbody>
                         {movies.map(x =>
-                            <tr key={x.Title}>
+                            <tr key={x.MovieId}>
+                                <td>{x.MovieId}</td>
                                 <td>{x.Title}</td>
                                 <td>{x.Genre}</td>
                                 <td>{x.Actors}</td>
@@ -119,11 +161,11 @@ export class Movies extends Component {
                                             onChange={this.changeMovieTitle} />
                                     </div>
 
-                                    {MovieId == 0 ?
+                                    {MovieId === 0 ?
                                         <button type='button' className='btn btn-primary float-start'>Create</button>
                                         : null}
 
-                                    {MovieId != 0 ?
+                                    {MovieId !== 0 ?
                                         <button type='button' className='btn btn-primary float-start'>Update</button>
                                         : null}
 
