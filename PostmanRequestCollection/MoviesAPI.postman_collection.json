@@ -1,0 +1,59 @@
+{
+	"info": {
+		"_postman_id": "b5547862-87a6-4007-b16c-7501618948c3",
+		"name": "MoviesAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15373260"
+	},
+	"item": [
+		{
+			"name": "Get_All",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5033/api/movie",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5033",
+					"path": [
+						"api",
+						"movie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Movie",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n        \"Title\": \"There Will Be Blood\",\r\n        \"Genre\": \"Drama\",\r\n        \"Actors\": \"Al Pacino;Marlon Brando\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5033/api/movie",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5033",
+					"path": [
+						"api",
+						"movie"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
