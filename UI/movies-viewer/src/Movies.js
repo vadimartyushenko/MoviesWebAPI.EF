@@ -1,4 +1,3 @@
-import { tsConstructorType } from '@babel/types'
 import React, { Component } from "react";
 import { variables } from "./Variables.js";
 
@@ -14,6 +13,8 @@ export class Movies extends Component {
             MovieId: 0,
             MovieIdFilter: "",
             MovieNameFilter: "",
+            MovieGenreFilter: "",
+            MovieActorFilter: "",
             moviesWithoutFilter: []
         }
     }
@@ -21,15 +22,24 @@ export class Movies extends Component {
     FilterFn() {
         var MovieIdFilter = this.state.MovieIdFilter;
         var MovieNameFilter = this.state.MovieNameFilter;
+        var MovieGenreFilter = this.state.MovieGenreFilter;
+        var MovieActorFilter = this.state.MovieActorFilter;
 
         var filteredData = this.state.moviesWithoutFilter.filter(
             function (el) {
                 return el.MovieId.toString().toLowerCase().includes(
                     MovieIdFilter.toString().trim().toLowerCase()
                 ) &&
-                    el.MovieName.toString().toLowerCase().includes(
+                    el.Title.toString().toLowerCase().includes(
                         MovieNameFilter.toString().trim().toLowerCase()
-                    )
+                ) &&
+                    el.Genre.toString().toLowerCase().includes(
+                      MovieGenreFilter.toString().trim().toLowerCase()
+                )
+                &&
+                el.Actors.toString().toLowerCase().includes(
+                  MovieActorFilter.toString().trim().toLowerCase()
+            )
             }
         );
 
@@ -38,12 +48,21 @@ export class Movies extends Component {
 
     changeMovieIdFilter = (e) => {
         this.state.MovieIdFilter = e.target.value;
-        //this.setState({MovieIdFilter: e.target.value});
         this.FilterFn();
     }
 
     changeMovieNameFilter = (e) => {
         this.state.MovieNameFilter = e.target.value;
+        this.FilterFn();
+    }
+
+    changeMovieGenreFilter = (e) => {
+        this.state.MovieGenreFilter = e.target.value;
+        this.FilterFn();
+    }
+    
+    changeMovieActorFilter = (e) => {
+        this.state.MovieActorFilter = e.target.value;
         this.FilterFn();
     }
 
@@ -110,9 +129,15 @@ export class Movies extends Component {
                                 Title
                             </th>
                             <th>
+                            <input className='form-control m-2'
+                                    onChange={this.changeMovieGenreFilter}
+                                    placeholder="Filter By Genre" />
                                 Genre
                             </th>
                             <th>
+                            <input className='form-control m-2'
+                                    onChange={this.changeMovieActorFilter}
+                                    placeholder="Filter By Actor" />
                                 Actors
                             </th>
                             <th>
