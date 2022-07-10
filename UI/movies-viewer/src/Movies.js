@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { variables } from "./Variables.js";
+import ThInput from "./components/ThInput.jsx";
 
 export class Movies extends Component {
 
@@ -116,33 +117,11 @@ export class Movies extends Component {
                 <table className="table table-striped">
                     <thead>
                         <tr>
-                            <th>
-                                <input className='form-control m-2'
-                                    onChange={this.changeMovieIdFilter}
-                                    placeholder="Filter By Id" />
-                                Id
-                            </th>
-                            <th>
-                                <input className='form-control m-2'
-                                    onChange={this.changeMovieNameFilter}
-                                    placeholder="Filter By Title" />
-                                Title
-                            </th>
-                            <th>
-                            <input className='form-control m-2'
-                                    onChange={this.changeMovieGenreFilter}
-                                    placeholder="Filter By Genre" />
-                                Genre
-                            </th>
-                            <th>
-                            <input className='form-control m-2'
-                                    onChange={this.changeMovieActorFilter}
-                                    placeholder="Filter By Actor" />
-                                Actors
-                            </th>
-                            <th>
-                                Options
-                            </th>
+                            <ThInput changeFilter={this.changeMovieIdFilter} parameter="Id"/>
+                            <ThInput changeFilter={this.changeMovieNameFilter} parameter="Title"/>
+                            <ThInput changeFilter={this.changeMovieGenreFilter} parameter="Genre"/>
+                            <ThInput changeFilter={this.changeMovieActorFilter} parameter="Actors"/>
+                            <th>Options</th>
                         </tr>
                     </thead>
                     <tbody>
