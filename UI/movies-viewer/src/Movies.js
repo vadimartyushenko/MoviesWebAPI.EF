@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { variables } from "./Variables.js";
 import ThInput from "./components/ThInput.jsx";
+import './styles/App.css';
 
 export class Movies extends Component {
 
@@ -33,18 +34,18 @@ export class Movies extends Component {
                 ) &&
                     el.Title.toString().toLowerCase().includes(
                         MovieNameFilter.toString().trim().toLowerCase()
-                ) &&
+                    ) &&
                     el.Genre.toString().toLowerCase().includes(
-                      MovieGenreFilter.toString().trim().toLowerCase()
-                )
-                &&
-                el.Actors.toString().toLowerCase().includes(
-                  MovieActorFilter.toString().trim().toLowerCase()
-            )
+                        MovieGenreFilter.toString().trim().toLowerCase()
+                    )
+                    &&
+                    el.Actors.toString().toLowerCase().includes(
+                        MovieActorFilter.toString().trim().toLowerCase()
+                    )
             }
         );
 
-        this.setState({movies:filteredData});
+        this.setState({ movies: filteredData });
     }
 
     changeMovieIdFilter = (e) => {
@@ -61,7 +62,7 @@ export class Movies extends Component {
         this.state.MovieGenreFilter = e.target.value;
         this.FilterFn();
     }
-    
+
     changeMovieActorFilter = (e) => {
         this.state.MovieActorFilter = e.target.value;
         this.FilterFn();
@@ -117,10 +118,10 @@ export class Movies extends Component {
                 <table className="table table-striped">
                     <thead>
                         <tr>
-                            <ThInput changeFilter={this.changeMovieIdFilter} parameter="Id"/>
-                            <ThInput changeFilter={this.changeMovieNameFilter} parameter="Title"/>
-                            <ThInput changeFilter={this.changeMovieGenreFilter} parameter="Genre"/>
-                            <ThInput changeFilter={this.changeMovieActorFilter} parameter="Actors"/>
+                            <ThInput changeFilter={this.changeMovieIdFilter} parameter="Id" />
+                            <ThInput changeFilter={this.changeMovieNameFilter} parameter="Title" />
+                            <ThInput changeFilter={this.changeMovieGenreFilter} parameter="Genre" />
+                            <ThInput changeFilter={this.changeMovieActorFilter} parameter="Actors" />
                             <th>Options</th>
                         </tr>
                     </thead>
@@ -151,7 +152,7 @@ export class Movies extends Component {
                 </table>
 
                 <div className='modal fade' id="exampleModal" tabIndex="-1" aria-hidden="true">
-                    <div className='modal-dialog modal-lg modal-dialog-centered'>
+                    <div className='modal-dialog  modal-lg modal-dialog-centered'>
                         <div className='modal-content'>
                             <div className='modal-header'>
                                 <h5 className='modal-title'>{modalTitle}</h5>
@@ -162,17 +163,20 @@ export class Movies extends Component {
                                         <span className='input-group-text'>Movie Title</span>
                                         <input type="text" className="form-control"
                                             value={MovieName}
-                                            onChange={this.changeMovieTitle} />
+                                            onChange={this.changeMovieTitle}
+                                            placeholder="Title" />
                                     </div>
 
-                                    {MovieId === 0 ?
-                                        <button type='button' className='btn btn-primary float-start'>Create</button>
-                                        : null}
+                                    <div className="modal-footer">
+                                        {MovieId === 0 ?
+                                            <button type='button' className='btn btn-primary float-start'>Create</button>
+                                            : null}
 
-                                    {MovieId !== 0 ?
-                                        <button type='button' className='btn btn-primary float-start'>Update</button>
-                                        : null}
-
+                                        {MovieId !== 0 ?
+                                            <button type='button' className='btn btn-primary float-start'>Update</button>
+                                            : null}
+                                        <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
                                 </div>
 
                             </div>
