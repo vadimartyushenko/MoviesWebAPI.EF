@@ -28,12 +28,14 @@ Adding movie information to the database. Information about the movie is sent in
         "Actors": "Al Pacino;Marlon Brando"
     }
 
-To test the API, you can use Postman Request Collection (see /PostmanRequestCollection/MoviesAPI.postman_collection.json).
+To test the API, you can use Postman Request Collection (see [PostmanRequestCollection](https://github.com/vadimartyushenko/MoviesWebAPI.EF/blob/master/PostmanRequestCollection/MoviesAPI.postman_collection.json)).
 
 DB for test see in /DB folder.
 
 ## UI
 
 The frontend part is implemented using React and Bootstrap library. The application allows you to filter information about movies by a given title, genre, actors and record ID. 
+![Logo](./UI/img/UI_screen.png)
 
 Added blanks for buttons that allow you to add, change or delete data through the UI (BUT binding to the corresponding API methods is not yet implemented!)
+
